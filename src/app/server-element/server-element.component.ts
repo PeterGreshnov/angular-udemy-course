@@ -11,7 +11,10 @@ import {
   AfterContentChecked,
   AfterViewInit,
   AfterViewChecked,
-  OnDestroy
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  ContentChild
 } from '@angular/core';
 
 @Component({
@@ -31,7 +34,9 @@ AfterViewChecked,
 OnDestroy {
 
   @Input('srvElement') element: {type: string, name: string, content: string}; 
-  @Input() name: string = ''; 
+  @Input() name: string = '';
+  @ViewChild('heading', {static: true}) header!: ElementRef;
+  @ContentChild('contentParagraph', {static: true}) paragraph!:ElementRef;
 
   constructor() {
     console.log('Constructor called!');
@@ -44,6 +49,8 @@ OnDestroy {
   }
   ngOnInit(): void {
     console.log('ngOnInit called!');
+    console.log('Text content: ' + this.header.nativeElement.textContent);
+    console.log('Paragraph content @ngOnInit: ' + this.paragraph.nativeElement.textContent);
   }
   
   ngDoCheck() {
@@ -52,6 +59,7 @@ OnDestroy {
   
   ngAfterContentInit() {
     console.log('ngAfterContentInit called!');
+    console.log('Paragraph content @ngAfterContentInit: ' + this.paragraph.nativeElement.textContent);
   }
 
   ngAfterContentChecked(){
@@ -61,6 +69,7 @@ OnDestroy {
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit called!');
+    console.log('Text content: ' + this.header.nativeElement.textContent);
   }
 
   ngAfterViewChecked(){

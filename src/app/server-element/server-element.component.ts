@@ -4,7 +4,6 @@ import {
   Input, 
   ViewEncapsulation, 
   OnChanges, 
-  SimpleChange,
   SimpleChanges,
   DoCheck,
   AfterContentInit,

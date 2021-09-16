@@ -25,7 +25,6 @@ export class RecipesComponent implements OnInit {
   }
 
   onRecipeRecieved(recipe:Recipe){
-    console.log("Recipe recieved in the Recipes component", recipe);
     this.recipeSelected = recipe;
   }
 

@@ -21,7 +21,8 @@ export class RecipeService {
         new Ingredient('Granny', 1),
         new Ingredient('Cookies', 100)
     ]),
-    new Recipe('Burgers', 
+    new Recipe(
+    'Burgers', 
     'Beef burger! Yummy!', 
     'https://realfood.tesco.com/media/images/Burger-31LGH-a296a356-020c-4969-86e8-d8c26139f83f-0-1400x919.jpg',
     [
@@ -36,6 +37,9 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
+  getRecipe(id: number) {
+    return this.recipes[id];
+  }
   
 
 }

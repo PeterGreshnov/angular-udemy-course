@@ -7,12 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-  
-  currentPage: string = 'recipies';
-
-
-  onPageSelected(page: string){
-    this.currentPage=page;
-  }
 
 }

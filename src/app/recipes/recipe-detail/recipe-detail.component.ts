@@ -1,5 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Recipe } from '../recipe.model';
@@ -16,9 +17,11 @@ export class RecipeDetailComponent implements OnInit {
   
   constructor(private shoppingListService: ShoppingListService,
               private recipeService: RecipeService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
+    // for our own observables (not managed by Angular) we will have to clean subscriptions (unsubscribe) on Destroy
         this.route.params
           .subscribe(
             (params: Params) => {
@@ -30,6 +33,14 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToShoppingList() {
     this.shoppingListService.addIngredients(this.recipe.ingredients);
+  }
+
+  onEditNavigate(){
+    // one way - easy :
+    // this.router.navigate(['edit'], {relativeTo: this.route});
+
+    // this is another implementation option: construct almost the entire URL
+    this.router.navigate(['../',this.id,'edit'], {relativeTo: this.route});
   }
 
 }

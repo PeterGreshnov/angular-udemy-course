@@ -15,6 +15,7 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { RecipeSelectComponent } from './recipes/recipe-select/recipe-select.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 
 
@@ -29,7 +30,8 @@ import { RecipeSelectComponent } from './recipes/recipe-select/recipe-select.com
     ShoppingListEditComponent,
     RecipesComponent,
     DropdownDirective,
-    RecipeSelectComponent
+    RecipeSelectComponent,
+    RecipeEditComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,9 @@
             <a 
                 class="list-group-item" 
                 style="cursor: pointer"
-                *ngFor="let ingredient of ingridients">
+                *ngFor="let ingredient of ingridients; let i = index;"
+                (click)="onSelectItem(i)"
+            >
             {{ ingredient.name }} ({{ ingredient.amount }})
             </a>
         </ul>

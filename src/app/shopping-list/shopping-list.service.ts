@@ -8,6 +8,7 @@ import { Ingredient } from '../shared/ingridient.model';
 })
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
 
   constructor() { }
 
@@ -29,6 +30,20 @@ export class ShoppingListService {
 
   getIngredients() {
     return this.ingridients.slice();
+  }
+
+  getIngredient(index: number) {
+    return this.ingridients[index];
+  }
+
+  updateIngredient(index: number, newIngredient: Ingredient) {
+    this.ingridients[index] = newIngredient;
+    this.ingredientsChanged.next(this.ingridients.slice());
+  }
+
+  deleteIngredient(index: number) {
+    this.ingridients.splice(index, 1);
+    this.ingredientsChanged.next(this.ingridients.slice());
   }
 
 }

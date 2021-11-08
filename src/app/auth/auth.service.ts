@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
 
 export interface AuthResponseData {
@@ -18,9 +18,14 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
+  token: string = '';
+
+
+  user = new BehaviorSubject<User>(new User('','','', new Date()));
+
   constructor(private http: HttpClient) {}
 
-  user = new Subject<User>();
+
 
   signup(email: string, password: string) {
     return this.http
@@ -65,6 +70,10 @@ export class AuthService {
         );
       })
       );
+  }
+
+  getUser() {
+    return this.user;
   }
 
   private handleAuthentication(

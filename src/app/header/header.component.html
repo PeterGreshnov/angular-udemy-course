@@ -10,14 +10,17 @@
             <ul class="nav navbar-nav">
                 <!-- <li><a routerLink="recipes">Recipes</a></li>
                 <li><a routerLink="shoppinglist">Shopping list</a></li> -->
-                <li role="presentation" routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+                <li role="presentation" routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/recipes">Recipes</a></li>
                 <li role="presentation" routerLinkActive="active"><a routerLink="/shoppinglist">Shopping list</a></li>
-                <li role="presentation" routerLinkActive="active"><a routerLink="/auth">Auth</a></li>
+                <li role="presentation" routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="/auth">Auth</a></li>
                 <!-- <li><a href="#" (click)="onRecipiesClick()">Recipes</a></li>
                 <li><a href="#" (click)="onShoppinglistClick()">Shopping list</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li appDropdown class="dropdown">
+              <li *ngIf="isAuthenticated">
+                <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
+              </li>
+                <li appDropdown class="dropdown" *ngIf="isAuthenticated">
                     <a class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a style="cursor: pointer;" (click)="onSaveRecipes()">Save Data</a></li>

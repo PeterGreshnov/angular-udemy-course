@@ -20,6 +20,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterseptorService } from './auth/auth-interseptor.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 
@@ -37,7 +38,8 @@ import { AuthInterseptorService } from './auth/auth-interseptor.service';
     RecipeSelectComponent,
     RecipeEditComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

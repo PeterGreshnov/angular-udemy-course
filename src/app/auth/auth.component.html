@@ -1,12 +1,23 @@
+<!-- Adding ng-template and a placeholder directive is a way of adding a dynamic (programmatic) component -->
+<ng-template appPlaceholder></ng-template>
+
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
+
     <!-- <div class="alert alert-danger" *ngIf="error">
       <p>{{ error }}</p>
     </div> -->
 
-    <app-alert [message]="error" *ngIf="error" (close)="onHanldeError()"></app-alert>
+    <!-- Following is the most convenient way of displaying the alert component based on the condition *ngIf="error" (declarative approach)
+      This approach should be used in most of the cases unless it is absolutely necessary to use dynamic (programmatic) components (imperative approach)
+    -->
+    <!-- <app-alert
+      [message]="error"
+      *ngIf="error"
+      (close)="onHanldeError()"
+    ></app-alert> -->
 
-    <div *ngIf="isLoading" style="text-align: center;">
+    <div *ngIf="isLoading" style="text-align: center">
       <app-loading-spinner></app-loading-spinner>
     </div>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
@@ -35,7 +46,11 @@
         />
       </div>
       <div>
-        <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!authForm.valid"
+        >
           {{ isLoginMode ? "Log In" : "Sign Up" }}
         </button>
         |

@@ -31,6 +31,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   onNewNavigate(){
+    console.log('navigate([new])');
     this.router.navigate(['new'], {relativeTo: this.route});
   }
 

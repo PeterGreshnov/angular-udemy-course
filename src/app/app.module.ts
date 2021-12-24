@@ -6,10 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModules } from './core.module';
-import { AuthModule } from './auth/auth.module';
+import { LoggingService } from './logging.service';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent ],
@@ -17,11 +16,10 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ShoppingListModule,
     SharedModule,
-    CoreModules,
-    AuthModule
+    CoreModules
   ],
   bootstrap: [AppComponent],
+  // providers: [LoggingService]
 })
 export class AppModule {}

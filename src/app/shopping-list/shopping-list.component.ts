@@ -25,8 +25,18 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.ingredients = this.store.select('shoppingList');
 
-    // this.ingredients = this.shoppingListService.getIngredients();
+    // In the HTML file we're using async pipeline to display subscription value emitted by store - that is one way to approach that
+    // Another way would be to set up usual subscription like that:
 
+    // this.store.select('shoppingList').subscribe(
+    //   //
+    // );
+    // and then unsubscribe in ngOnDestroy;
+
+
+    //Below is OLD implementation using the ShoppingListService. Above is the NEW - using NGRX
+
+    // this.ingredients = this.shoppingListService.getIngredients();
     // this.igChangeSub = this.shoppingListService.ingredientsChanged.subscribe(
     //   (ingredients: Ingredient[]) => {
     //     this.ingredients = ingredients;

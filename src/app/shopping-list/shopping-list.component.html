@@ -5,10 +5,10 @@
         </app-shopping-list-edit>
         <hr>
         <ul class="list-group">
-            <a 
-                class="list-group-item" 
+            <a
+                class="list-group-item"
                 style="cursor: pointer"
-                *ngFor="let ingredient of ingridients; let i = index;"
+                *ngFor="let ingredient of (ingredients | async).ingredients; let i = index;"
                 (click)="onSelectItem(i)"
             >
             {{ ingredient.name }} ({{ ingredient.amount }})

@@ -13,38 +13,38 @@ export class ShoppingListService {
 
   constructor() { }
 
-  ingridients: Ingredient[] = [
+  private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
     new Ingredient('Tomatoes', 10)
   ];
 
   addIngredient(ingredient: Ingredient) {
-      this.ingridients.push(ingredient);
-      this.ingredientsChanged.next(this.ingridients.slice());
+      this.ingredients.push(ingredient);
+      this.ingredientsChanged.next(this.ingredients.slice());
   }
-  
+
   addIngredients(ingredients: Ingredient[]) {
-    this.ingridients.push(...ingredients);
-    this.ingredientsChanged.next(this.ingridients.slice());
+    this.ingredients.push(...ingredients);
+    this.ingredientsChanged.next(this.ingredients.slice());
 
   }
 
   getIngredients() {
-    return this.ingridients.slice();
+    return this.ingredients.slice();
   }
 
   getIngredient(index: number) {
-    return this.ingridients[index];
+    return this.ingredients[index];
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
-    this.ingridients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingridients.slice());
+    this.ingredients[index] = newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   deleteIngredient(index: number) {
-    this.ingridients.splice(index, 1);
-    this.ingredientsChanged.next(this.ingridients.slice());
+    this.ingredients.splice(index, 1);
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
 }

@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { LoggingService } from '../logging.service';
 
+import { LoggingService } from '../logging.service';
 import { Ingredient } from '../shared/ingridient.model';
-import { ShoppingListService } from './shopping-list.service';
+import * as fromShoppingList from './store/shopping-list.reducer'
+import * as ShoppingListActions from './store/shopping-list.actions'
 
 @Component({
   selector: 'app-shopping-list',
@@ -16,9 +17,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private igChangeSub!: Subscription;
 
   constructor(
-    private shoppingListService: ShoppingListService,
     private loggingService: LoggingService,
-    private store: Store<{shoppingList: {ingredients: Ingredient[]}}>
+    private store: Store<fromShoppingList.AppState>
   ) {}
 
   // it is considered to be a good practice to initialize all the values in the ngOnInit section
@@ -50,7 +50,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onSelectItem(i: number) {
-    this.shoppingListService.startedEditing.next(i);
+    //this.shoppingListService.startedEditing.next(i);
+    this.store.dispatch(new ShoppingListActions.StartEdit(i));
   }
 
   // we don't need this anymore because new ingredients are added at the shopping list edit component via ShoppingListService call

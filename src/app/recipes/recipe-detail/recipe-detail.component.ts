@@ -1,10 +1,11 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
+import { Ingredient } from 'src/app/shared/ingridient.model';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions'
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,11 +15,12 @@ import { RecipeService } from '../recipe.service';
 export class RecipeDetailComponent implements OnInit {
   recipe!: Recipe;
   id!: number;
-  
-  constructor(private shoppingListService: ShoppingListService,
+
+  constructor(
               private recipeService: RecipeService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private store:Store<{shoppingList: {ingredients: Ingredient[]}}>) { }
 
   ngOnInit(): void {
     // for our own observables (not managed by Angular) we will have to clean subscriptions (unsubscribe) on Destroy
@@ -32,7 +34,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onAddToShoppingList() {
-    this.shoppingListService.addIngredients(this.recipe.ingredients);
+    // this.shoppingListService.addIngredients(this.recipe.ingredients);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(this.recipe.ingredients));
   }
 
   onEditNavigate(){
@@ -45,7 +48,7 @@ export class RecipeDetailComponent implements OnInit {
 
   onDelete() {
     this.recipeService.deleteRecipe(this.id!);
-    this.router.navigate(['../'], {relativeTo: this.route});    
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }

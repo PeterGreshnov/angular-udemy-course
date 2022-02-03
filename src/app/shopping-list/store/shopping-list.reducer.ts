@@ -7,9 +7,10 @@ export interface State {
   editedIngredientIndex: number;
 }
 
-export interface AppState {
-  shoppingList: State;
-}
+// Removing AppState from that file and moving it to the global app.reducer
+// export interface AppState {
+//   shoppingList: State;
+// }
 
 const initialState: State =  {
   ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatoes', 4)],

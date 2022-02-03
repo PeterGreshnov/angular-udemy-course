@@ -10,18 +10,18 @@ import { HeaderComponent } from './header/header.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModules } from './core.module';
 
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
+import * as fromApp from './store/app.reducrer'
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent ],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({shoppingList: shoppingListReducer}),
+    StoreModule.forRoot(fromApp.appReducer),
     AppRoutingModule,
     SharedModule,
-    CoreModules
+    CoreModules,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

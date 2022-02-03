@@ -4,8 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 
 import { LoggingService } from '../logging.service';
 import { Ingredient } from '../shared/ingridient.model';
-import * as fromShoppingList from './store/shopping-list.reducer'
-import * as ShoppingListActions from './store/shopping-list.actions'
+import * as fromApp from '../store/app.reducrer';
+import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
@@ -18,7 +18,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   constructor(
     private loggingService: LoggingService,
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
   ) {}
 
   // it is considered to be a good practice to initialize all the values in the ngOnInit section

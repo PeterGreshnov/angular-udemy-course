@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Firebase Deploy
+The Firebase project is already configured (was done in 23-firebase-deploy branch). 
+To deploy to Firebase Hosting run
+`firebase deploy --only hosting`
+Firebase hosting URL - https://ng-recipe-book-8c011.web.app/recipes 

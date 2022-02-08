@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { State, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
 import { DataStorageService } from '../shared/data-storage.service';
+import * as fromApp from '../store/app.reducrer';
 
 @Component({
   selector: 'app-header',
@@ -22,11 +25,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private dataStorage: DataStorageService,
     private authService: AuthService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe((user) => {
+    this.userSub = this.store.select('auth')
+    .pipe(map(authState => authState.user))
+    .subscribe((user) => {
       // this.isAuthenticated = !user ? false : true;  - this is a direct way of writing this expression;
       // and here is another option:
       this.isAuthenticated = !!user; // if !user = true (there is NO user) - then we get isAuthenticated = false;

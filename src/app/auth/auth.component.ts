@@ -8,10 +8,13 @@ import {
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { AuthResponseData, AuthService } from './auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
+import * as fromApp from '../store/app.reducrer';
+import * as AuthActions from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -30,10 +33,19 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private store: Store<fromApp.AppState>
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+      if (this.error) {
+        this.showErrorAlert(this.error);
+      }
+    })
+  }
 
   ngOnDestroy(): void {
     if (this.closeSub) {
@@ -57,24 +69,27 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     if (this.isLoginMode) {
-      authObs = this.authService.login(email, password);
+      // authObs = this.authService.login(email, password);
+      this.store.dispatch(new AuthActions.LoginStart({ email, password }));
     } else {
       authObs = this.authService.signup(email, password);
     }
 
-    authObs.subscribe(
-      (authResponseData) => {
-        console.log(authResponseData);
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      (errorMessage) => {
-        console.log(errorMessage);
-        this.error = errorMessage; // for programmatic component option we don't need that property anymore;
-        this.showErrorAlert(errorMessage);
-        this.isLoading = false;
-      }
-    );
+
+
+    // authObs.subscribe(
+    //   (authResponseData) => {
+    //     console.log(authResponseData);
+    //     this.isLoading = false;
+    //     this.router.navigate(['/recipes']);
+    //   },
+    //   (errorMessage) => {
+    //     console.log(errorMessage);
+    //     this.error = errorMessage; // for programmatic component option we don't need that property anymore;
+    //     this.showErrorAlert(errorMessage);
+    //     this.isLoading = false;
+    //   }
+    // );
 
     authForm.reset();
   }
@@ -96,13 +111,10 @@ export class AuthComponent implements OnInit, OnDestroy {
       componentRef.instance.message = errorMessage;
     }
 
-    this.closeSub = componentRef?.instance.close.subscribe(
-      () => {
-        this.closeSub?.unsubscribe();
-        hostViewCOntainerRef?.clear();
-        //componentRef.destroy();
-      }
-    );
-
+    this.closeSub = componentRef?.instance.close.subscribe(() => {
+      this.closeSub?.unsubscribe();
+      hostViewCOntainerRef?.clear();
+      //componentRef.destroy();
+    });
   }
 }

@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -30,12 +29,12 @@ const handleAuthentication = (
   const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
   const user = new User(email, userId, token, expirationDate);
   localStorage.setItem('userData', JSON.stringify(user));
-
   return new AuthActions.AuthenticateSuccess({
     email: email,
     userId: userId,
     token: token,
     expirationDate,
+    redirect: true
   });
 };
 
@@ -143,8 +142,11 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE_SUCCESS),
-    tap(() => {
-      this.router.navigate(['/']);
+    tap((AuthSuccessAction: AuthActions.AuthenticateSuccess) => {
+      if (AuthSuccessAction.payload.redirect)
+      {
+        this.router.navigate(['/']);
+      }
     })
   );
 
@@ -193,6 +195,7 @@ export class AuthEffects {
                 userId: loadedUser.id,
                 token: loadedUser.token,
                 expirationDate: new Date(loadedUserData._tokenExpirationDate),
+                redirect: false
               });
             // this.autoLogout(expirationDuration);
           } else {

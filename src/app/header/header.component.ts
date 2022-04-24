@@ -5,8 +5,6 @@ import { map } from 'rxjs/operators';
 
 
 import { Recipe } from '../recipes/recipe.model';
-import { RecipeService } from '../recipes/recipe.service';
-import { DataStorageService } from '../shared/data-storage.service';
 import * as fromApp from '../store/app.reducrer';
 import * as AuthActions from '../auth/store/auth.actions';
 import * as RecipeActions from '../recipes/store/recipe.actions';
@@ -19,14 +17,11 @@ import * as RecipeActions from '../recipes/store/recipe.actions';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
-  private recipeSub!: Subscription;
   recipes: Recipe[] = [];
   collapsed = true;
   isAuthenticated = false;
 
   constructor(
-    private dataStorage: DataStorageService,
-    private recipeService: RecipeService,
     private store: Store<fromApp.AppState>
   ) {}
 
@@ -37,26 +32,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // this.isAuthenticated = !user ? false : true;  - this is a direct way of writing this expression;
       // and here is another option:
       this.isAuthenticated = !!user; // if !user = true (there is NO user) - then we get isAuthenticated = false;
-      console.log('Not user', !user);
-      console.log('NOT Not user', !!user);
-      this.recipes = this.recipeService.getRecipes();
-      console.log('Recipes', this.recipes, 'recipes.length()', this.recipes.length);
-
-      this.recipeSub = this.recipeService.recipesChanged.subscribe(
-        (recipes: Recipe[]) => {
-          this.recipes = recipes;
-          console.log('Recipes', this.recipes, 'recipes.length()', this.recipes.length);
-        }
-      )
     });
   }
 
   ngOnDestroy() {
+    if (this.userSub){
     this.userSub.unsubscribe();
+  }
   }
 
   onSaveRecipes() {
-    this.dataStorage.storeRecipes();
+    // this.dataStorage.storeRecipes();
+    this.store.dispatch(new RecipeActions.StoreReceipes());
   }
 
   onFetchRecipes() {
